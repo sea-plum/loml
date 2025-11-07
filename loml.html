@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esto solo es el comienzo 💌</title>
+<style>
+  body {
+    background-color: #F7F6F2;
+    color: #61294A66;
+    font-family: "Playfair Display", "Poppins", sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  #countdown {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.6rem 1.4rem;
+    border: 1.5px solid #61294A66;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #61294A66;
+    transition: 0.3s;
+  }
+
+  a:hover {
+    background-color: #61294A66;
+    color: #F7F6F2;
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <h1>Cuenta regresiva para la medianoche 💫</h1>
+  <div id="countdown"></div>
+</div>
+
+<div id="message" class="fade-in" style="display: none;">
+  <h1>✨ Esto solo es el comienzo.</h1>
+  <p>
+    A veces el amor llega despacito, como la primera luz del día.<br>
+    Pero cuando llega, se queda.<br><br>
+    <strong>Feliz primer mes de muchos que deseo a tu lado.</strong>
+  </p>
+  <a href="https://bonpremiermoiss.carrd.co/" target="_blank">Abrir el regalo 💌</a>
+</div>
+
+<script>
+  // Calcular diferencia horaria con México (UTC-6)
+  const mexicoOffset = -6; 
+  const now = new Date();
+  const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
+  const mexicoNow = new Date(utcNow + 3600000 * mexicoOffset);
+
+  // Configurar hora objetivo: medianoche siguiente en México
+  let target = new Date(mexicoNow);
+  target.setHours(24, 0, 0, 0);
+
+  function updateCountdown() {
+    const nowLocal = new Date();
+    const utc = nowLocal.getTime() + nowLocal.getTimezoneOffset() * 60000;
+    const mexicoTime = new Date(utc + 3600000 * mexicoOffset);
+    const diff = target - mexicoTime;
+
+    if (diff <= 0) {
+      document.getElementById("container").style.display = "none";
+      const msg = document.getElementById("message");
+      msg.style.display = "block";
+      return;
+    }
+
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+      `${hours.toString().padStart(2, '0')}:${minutes
+        .toString()
+        .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
